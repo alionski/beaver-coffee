@@ -26,7 +26,7 @@
                         <!--some Jinja magic for showing checked boxes if the user selected something-->
                         <!--before clicking on "Add to order"-->
 
-                        <!--for each product in the list that we passed from run.py-->
+                        <!--for each product in the list that we passed from __init__.py-->
 
                         {% for product in products %}
 
@@ -36,12 +36,12 @@
                             {% if choices %}
                                 {% if product in choices %}
                                     <!--if the product is in choice we are marking it as "checked"-->
-                                    <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product}}" checked> {{product}} : $ {{prices[product]}} <br>
+                                    <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product.name}}" checked> {{product.name}} : $ {{product.price}} <br>
                                 {% else %}
-                                    <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product}}"> {{product}} : $ {{prices[product]}} <br>
+                                    <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product.name}}"> {{product.name}} : $ {{product.price}} <br>
                                 {% endif %}
                             {% else %}
-                                <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product}}"> {{product}} : $ {{prices[product]}} <br>
+                                <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product.name}}"> {{product.name}} : $ {{product.price}} <br>
                             {% endif %}
 
                         {% endfor %}
