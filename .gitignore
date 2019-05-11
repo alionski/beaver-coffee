@@ -19,7 +19,7 @@ myvenv/
 .idea/
 
 # credentials
-backend/credentials.ini
+credentials.ini
 
 # Generated files
 .idea/**/contentModel.xml

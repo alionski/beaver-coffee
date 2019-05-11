@@ -3,26 +3,23 @@
 # products to the product collection
 # I commented and uncommented stuff and did some
 # db administration so to speak
-# ran it by simply $ python mongo_scratchpad.py
+# ran it by simply $ python mongo_populate.py
 
-import pymongo
+from mongoengine import connect
+from app.models import *
 import configparser
 
 config = configparser.ConfigParser()
-config.read('credentials.ini')
+config.read('app/credentials.ini')
 username = config['mongo_atlas']['username']
 password = config['mongo_atlas']['password']
+atlas_uri = "mongodb+srv://" + username + ":" + password + "@cluster0-jwmsg.mongodb.net/beaver?retryWrites=true"
 
-client = pymongo.MongoClient("mongodb+srv://" + username + ":" + password + "@cluster0-jwmsg.mongodb.net/test?retryWrites=true")
-
-# define db
-beaver_database = client.beaver
-# define collections
-products_collection = beaver_database.products
-orders_collection = beaver_database.orders
+connect('beaver', atlas_uri)
 
 # I've been deleting and rewriting here so it's not all the
 # stuff that I've run
+
 hot_chocolate = {
     "name": "hot chocolate",
     "price": "4",
@@ -34,4 +31,5 @@ avocado_latte = {
 }
 
 to_insert = [hot_chocolate, avocado_latte]
-products_collection.insert_many(to_insert)
+for p in to_insert:
+    Product(name=p['name'], price=p['price']).save()
