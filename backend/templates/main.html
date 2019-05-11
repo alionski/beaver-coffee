@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BeaverCoffee</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+
+        <div class="row justify-content-md-center p-3">
+            <div class=col-6">
+                <p><h1>New Order</h1></p>
+            </div>
+        </div>
+
+        <!--column one-->
+        <div class="row justify-content-md-center p-3 mt-3">
+            <div class="col-6">
+
+                <form action="/" method="post">
+                    <div class="form-group">
+
+                        <!--some Jinja magic for showing checked boxes if the user selected something-->
+                        <!--before clicking on "Add to order"-->
+
+                        <!--for each product in the list that we passed from run.py-->
+
+                        {% for product in products %}
+
+                            <!--if choices is empty, e.g. if it's the first time the page is shown-->
+                            <!--and we didn't send a "choices" variable, this step will be skipped-->
+
+                            {% if choices %}
+                                {% if product in choices %}
+                                    <!--if the product is in choice we are marking it as "checked"-->
+                                    <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product}}" checked> {{product}} : $ {{prices[product]}} <br>
+                                {% else %}
+                                    <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product}}"> {{product}} : $ {{prices[product]}} <br>
+                                {% endif %}
+                            {% else %}
+                                <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product}}"> {{product}} : $ {{prices[product]}} <br>
+                            {% endif %}
+
+                        {% endfor %}
+                    </div>
+
+                    <button type="submit" name="add_to_order" class="btn btn-light">Add to order</button>
+                    <button type="submit" name="checkout" class="btn btn-light">Checkout order</button>
+
+                </form>
+            </div>
+
+            <!--column two-->
+            <div class=col-6">
+
+                <p>Order items:</p>
+                <ul class="list-group">
+
+                    {% for choice in choices %}
+                        <li class="list-group-item text-muted">{{ choice }}</li>
+                    {% else %}
+                    <li class="list-group-item text-muted">Empty</li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

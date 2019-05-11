@@ -1,0 +1,9 @@
+body {
+    background-color: #787878;
+    color: #ffffff;
+}
+
+.big-checkbox {
+    width: 30px;
+    height: 30px;
+}
