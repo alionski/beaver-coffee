@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %} Admin Page {% endblock %}
+{% block container %}
+    <div class="row justify-content-md-center p-3">
+        <div class=col-12">
+            <p>
+                <form action="/admin/action" method="post">
+                    <button type="submit" name="manage_employee" class="btn btn-light">Manage Employee</button>
+                    <button type="submit" name="manage_customer" class="btn btn-light">Manage Customer</button>
+                    <button type="submit" name="manage_stock" class="btn btn-light">Manage Stock</button>
+                    <button type="submit" name="reports" class="btn btn-light">Reports</button>
+                </form>
+            </p>
+        </div>
+    </div>
+    <div class="row justify-content-md-center p-3">
+        <div class=col-12">
+            {% block contents %} {% endblock %}
+        </div>
+    </div>
+{% endblock %}

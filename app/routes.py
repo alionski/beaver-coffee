@@ -60,6 +60,28 @@ def populate(collection):
     return render_template("populate.html", name=name, form=form)
 
 
+# button in navbar
+@app.route("/admin/", methods=['GET'])
+def show_admin_page():
+    return render_template("admin.html")
+
+
+@app.route("/admin/action/", methods=['POST'])
+def admin_action():
+    if "manage_employee" in request.form:
+        # do something here
+        return render_template("manage_employee.html")
+    elif "manage_customer" in request.form:
+        # do something here
+        return render_template("manage_customer.html")
+    elif "manage_stock" in request.form:
+        # do something here
+        return render_template("manage_stock.html")
+    elif "reports" in request.form:
+        # do something here
+        return render_template("reports.html")
+
+
 # re-retrieves the available products from the db
 def refresh_products():
     products.clear()
