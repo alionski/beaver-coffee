@@ -22,6 +22,8 @@ app.config['MONGODB_SETTINGS'] = {
 
 db = MongoEngine(app)
 
+app.config['SECRET_KEY'] = "do not tell anyone"
+
 from app import routes, models
 
 

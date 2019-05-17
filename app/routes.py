@@ -1,5 +1,6 @@
 # importing specific functions from Flask
 from flask import render_template, request, url_for
+from flask_mongoengine.wtf import model_form
 from werkzeug.utils import redirect
 from app import app, mongo_helper
 from app.models import *
@@ -38,12 +39,33 @@ def update_order():
         return redirect(url_for('index'))
 
 
+# used for adding documents to a collection
+# for example localhost:3031/populate/customers
+# will show a form for the customer model
+# and clicking "save" will save a document to the database
+@app.route("/populate/<collection>", methods=['GET', 'POST'])
+def populate(collection):
+    # add models here to render them as a form
+    model = {"customers": Customer(),
+             "employees": Employee()}.get(collection)
+
+    form = model_form(model.__class__)(request.form)
+    name = model.__class__.__name__
+
+    if form.validate_on_submit():
+        model = Customer()
+        form.populate_obj(model)
+        model.save()
+        return redirect(url_for("populate", collection=collection))
+
+    return render_template("populate.html", name=name, form=form)
+
+
 # re-retrieves the available products from the db
 def refresh_products():
     products.clear()
 
     for product in Product.objects:
-        print(product.name, ":", product.price)
         # add the product to the list of products
         products[product.name] = product
 
@@ -51,7 +73,6 @@ def refresh_products():
 # called when user adds products to the cart/order
 def add_to_order(choices):
     for choice in choices:
-        print(choice)
         mongo_helper.add_to_order(products[choice])
 
 

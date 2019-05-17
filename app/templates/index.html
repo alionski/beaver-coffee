@@ -34,7 +34,7 @@
                             <!--and we didn't send a "choices" variable, this step will be skipped-->
 
                             {% if choices %}
-                                {% if product in choices %}
+                                {% if product.name in choices %}
                                     <!--if the product is in choice we are marking it as "checked"-->
                                     <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product.name}}" checked> {{product.name}} : $ {{product.price}} <br>
                                 {% else %}
