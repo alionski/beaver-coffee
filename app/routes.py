@@ -53,7 +53,6 @@ def populate(collection):
     name = model.__class__.__name__
 
     if form.validate_on_submit():
-        model = Customer()
         form.populate_obj(model)
         model.save()
         return redirect(url_for("populate", collection=collection))
