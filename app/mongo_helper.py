@@ -36,3 +36,6 @@ def place_order():
     # global variables are questionable solution but works for now
     products.clear()
 
+# only clears order dont know if it should do something more
+def cancel_order():
+    products.clear()

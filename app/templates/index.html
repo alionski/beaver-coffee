@@ -32,12 +32,15 @@
                             {% if choices %}
                                 {% if product.name in choices %}
                                     <!--if the product is in choice we are marking it as "checked"-->
-                                    <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product.name}}" checked> {{product.name}} : $ {{product.price}} <br>
+                                    <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product.name}}" checked> {{product.name}} : $ {{product.price}}
+                                    <input type="number" min="0" class= "order-quantity" name="order_products"><br>
                                 {% else %}
-                                    <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product.name}}"> {{product.name}} : $ {{product.price}} <br>
+                                    <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product.name}}"> {{product.name}} : $ {{product.price}}
+                                    <input type="number" min="0" class= "order-quantity" name="order_products"><br>
                                 {% endif %}
                             {% else %}
-                                <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product.name}}"> {{product.name}} : $ {{product.price}} <br>
+                                <input type="checkbox" class= "big-checkbox" name="checkbox_products" value="{{product.name}}"> {{product.name}} : $ {{product.price}}
+                                <input type="number" min="0" class= "order-quantity" name="order_products"><br>
                             {% endif %}
 
                         {% endfor %}
@@ -45,12 +48,13 @@
 
                     <button type="submit" name="add_to_order" class="btn btn-light">Add to order</button>
                     <button type="submit" name="checkout" class="btn btn-light">Checkout order</button>
+                    <button type="submit" name="cancel" class="btn btn-light">Cancel order</button>
 
                 </form>
             </div>
 
             <!--column two-->
-            <div class=col-6">
+            <div class="col-6">
 
                 <p>Order items:</p>
                 <ul class="list-group">

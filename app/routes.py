@@ -3,7 +3,7 @@ from flask import render_template, request, url_for
 from flask_mongoengine.wtf import model_form
 from werkzeug.utils import redirect
 from app import app, mongo_helper
-from app.models import *
+from app.models import Customer, Employee, Product
 
 # list of products, like: "coffee", "cappuccino", "latte" etc.
 products = {}
@@ -26,9 +26,10 @@ def index():
 def update_order():
     # this is how we are getting the values from html checkboxes
     choices = request.form.getlist("checkbox_products")
+    quantities = request.form.getlist("order_products")
     # user clicked "Add to order"
     if "add_to_order" in request.form:
-        add_to_order(choices)
+        choices = add_to_order(choices, quantities)
         # show updates and keep the checkboxes clicked
         return render_template("index.html", products=products.values(), choices=choices)
     # user clicked "Checkout"
@@ -37,6 +38,10 @@ def update_order():
         finish_order()
         # go back to a clean main page
         return redirect(url_for('index'))
+    elif "cancel" in request.form: # cancel and clear the thingy
+        cancel_order()
+        return redirect(url_for('index'))
+
 
 
 # used for adding documents to a collection
@@ -92,12 +97,20 @@ def refresh_products():
 
 
 # called when user adds products to the cart/order
-def add_to_order(choices):
-    for choice in choices:
-        mongo_helper.add_to_order(products[choice])
+def add_to_order(choices, quantities):
+    displaychoices = [] # so it can display several of one type in the order list
+    for choice in range(0, len(choices)):
+        for x in range(0, int(quantities[choice])):
+            mongo_helper.add_to_order(products[choices[choice]])
+            displaychoices.append(products[choices[choice]]["name"])
+    return displaychoices
 
 
 # submits the order, i.e. pushed to the db
 def finish_order():
     mongo_helper.place_order()
+    redirect(url_for('index'))
+
+def cancel_order():
+    mongo_helper.cancel_order()
     redirect(url_for('index'))

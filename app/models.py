@@ -1,4 +1,4 @@
-from mongoengine import *
+from mongoengine import Document, EmbeddedDocument, EmbeddedDocumentField, EmbeddedDocumentListField, StringField, IntField, DateTimeField, ReferenceField, ListField, DictField
 import datetime
 
 
