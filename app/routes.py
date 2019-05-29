@@ -7,6 +7,7 @@ from app.models import *
 
 # list of products, like: "coffee", "cappuccino", "latte" etc.
 products = {}
+stock_items = {}
 
 
 # main page, returned when one navigates to 127.0.0.1
@@ -15,7 +16,9 @@ products = {}
 def index():
     # first get all products from the db and organize them
     refresh_products()
-    return render_template("index.html", products=products.values())
+    # get all items in stock
+    retrieve_stock()
+    return render_template("index.html", products=products.values(), stock_items=stock_items.values())
 
 
 # this will be called when the user clicks on "Add to order" or "Checkout"
@@ -101,3 +104,12 @@ def add_to_order(choices):
 def finish_order():
     mongo_helper.place_order()
     redirect(url_for('index'))
+
+
+# retrieves stock from the db
+def retrieve_stock():
+    for item in StockItem.objects:
+        stock_items[item.name] = item
+
+
+

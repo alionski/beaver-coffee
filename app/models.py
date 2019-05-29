@@ -108,3 +108,11 @@ class Employee(Document):
 
     def __repr__(self):
         return "<Employee {}>".format(self.get_full_name())
+
+
+class StockItem(Document):
+    meta = {'collection': 'stock'}
+    name = StringField(required=True)
+    quantity = IntField(min_value=0, required=True)
+    type = StringField(max_length=20)
+    timestamp = DateTimeField(default=datetime.datetime.utcnow)

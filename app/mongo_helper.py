@@ -1,8 +1,13 @@
-from app.models import Product, Order
+from app.models import Product, Order, StockItem
 
 # global lists
 products = []
+stock = []
 
+
+# gets all items from the Stock collection
+def get_all_stock_items():
+    return StockItem.objects
 
 # gets all products from the collection on Atlas
 # called from routes.py
