@@ -99,11 +99,22 @@ def refresh_products():
 # called when user adds products to the cart/order
 def add_to_order(choices, quantities):
     displaychoices = [] # so it can display several of one type in the order list
+    quantities = clean_quantities_list(quantities) # get rid of '' values
     for choice in range(0, len(choices)):
         for x in range(0, int(quantities[choice])):
             mongo_helper.add_to_order(products[choices[choice]])
             displaychoices.append(products[choices[choice]]["name"])
+
     return displaychoices
+
+# removes '' from the list of quantities
+def clean_quantities_list(quantities):
+    newQuant = []
+    for q in quantities:
+        if q != '':
+            newQuant.append(q)
+
+    return newQuant
 
 
 # submits the order, i.e. pushed to the db
